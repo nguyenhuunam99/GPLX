@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
-import { View, Text, Image } from 'react-native';
+import { View, Text, Image, Dimensions } from 'react-native';
 import Slideshow from 'react-native-slideshow';
 import { Button, Icon, ButtonGroup } from 'react-native-elements';
-import { MainScreen, DetailScreen, TipsScreen , BangGiaXeMayScreen} from './screenNames';
+import { MainScreen,ThiSatHachScreen, DetailScreen, TipsScreen, BangGiaXeMayScreen, TraCuuLuatScreen, HocLyThuyetScreen } from './screenNames';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+
+const windowHeight = Dimensions.get('window').height; 
 
 export default class Home extends Component {
   constructor(props) {
@@ -39,7 +41,7 @@ export default class Home extends Component {
       ],
     };
   }
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this.setState({
       interval: setInterval(() => {
         this.setState({
@@ -58,64 +60,70 @@ export default class Home extends Component {
       <View style={{ flex: 1 }}>
         <View style={{ flex: 3 }}>
           <Slideshow
+            height={windowHeight*0.3}
             dataSource={this.state.dataSource}
             position={this.state.position}
             onPositionChanged={position => this.setState({ position })}
           />
         </View>
         <View style={{ flex: 4 }}>
-          <View style={{ flexDirection: 'row', flex: 1 }}>
-            <View style={{ flex: 1, backgroundColor: 'white' }}>
-              <TouchableOpacity style={{ height: 134, borderWidth: 0.2, justifyContent: 'center', alignItems: 'center', }}>
-                <Image source={require('./resources/home/thisathach.jpg')} style={{ width: 100, height: 90 }} />
-                <Text style={{ textAlign: 'center' }}>THI SÁT</Text>
-                <Text style={{ textAlign: 'center' }}>HẠCH</Text>
-              </TouchableOpacity>
-            </View>
-            <View style={{ flex: 1, backgroundColor: 'white' }}>
-              <TouchableOpacity style={{ height: 134, justifyContent: 'center', alignItems: 'center', borderWidth: 0.2 }}>
-                <Image source={require('./resources/home/lythuyet.jpg')} style={{ width: 100, height: 90 }} />
-                <Text style={{ textAlign: 'center' }}>HỌC LÝ</Text>
-                <Text style={{ textAlign: 'center' }}>THUYẾT</Text>
-              </TouchableOpacity>
-            </View>
-            <View style={{ flex: 1, backgroundColor: 'white' }}>
-              <TouchableOpacity style={{ height: 134, justifyContent: 'center', alignItems: 'center', borderWidth: 0.2 }} onPress={() => { this.props.navigation.navigate(DetailScreen) }}>
-                <Image source={require('./resources/home/bienbao.jpg')} style={{ width: 100, height: 90 }} />
-                <Text style={{ textAlign: 'center' }}>BIỂN BÁO</Text>
-                <Text style={{ textAlign: 'center' }}>ĐƯỜNG BỘ</Text>
-              </TouchableOpacity>
+
+          <View style={{ flex: 1 }}>
+            <View style={{ flexDirection: 'row', flex: 1 }}>
+              <View style={{ flex: 1, backgroundColor: 'white', borderRightWidth:0.5 }}>
+                <TouchableOpacity style={{justifyContent: 'center', alignItems: 'center', }} onPress={() => { this.props.navigation.navigate(ThiSatHachScreen)}}>
+                  <Image source={require('./resources/home/thisathach.jpg')} style={{ width: 100, height: 90 }}  />
+                  <Text style={{ textAlign: 'center' }}>THI SÁT</Text>
+                  <Text style={{ textAlign: 'center' }}>HẠCH</Text>
+                </TouchableOpacity>
+              </View>
+              <View style={{ flex: 1, backgroundColor: 'white', borderRightWidth:0.5}}>
+                <TouchableOpacity style={{ justifyContent: 'center', alignItems: 'center'}} onPress={() => { this.props.navigation.navigate(HocLyThuyetScreen)}}>
+                  <Image source={require('./resources/home/lythuyet.jpg')} style={{ width: 100, height: 90 }} />
+                  <Text style={{ textAlign: 'center' }}>HỌC LÝ</Text>
+                  <Text style={{ textAlign: 'center' }}>THUYẾT</Text>
+                </TouchableOpacity>
+              </View>
+              <View style={{ flex: 1, backgroundColor: 'white'}}>
+                <TouchableOpacity style={{  justifyContent: 'center', alignItems: 'center' }} onPress={() => { this.props.navigation.navigate(DetailScreen) }}>
+                  <Image source={require('./resources/home/bienbao.jpg')} style={{ width: 100, height: 90 }} />
+                  <Text style={{ textAlign: 'center' }}>BIỂN BÁO</Text>
+                  <Text style={{ textAlign: 'center' }}>ĐƯỜNG BỘ</Text>
+                </TouchableOpacity>
+              </View>
             </View>
           </View>
-          <View style={{ flexDirection: 'row', flex: 1 }}>
-            <View style={{ flex: 1, backgroundColor: 'white' }}>
-              <TouchableOpacity style={{ height: 134, justifyContent: 'center', alignItems: 'center', borderWidth: 0.2 }} onPress={() => { this.props.navigation.navigate(TipsScreen) }}>
-                <Image source={require('./resources/home/meothi.jpg')} style={{ width: 100, height: 90 }} />
-                <Text style={{ textAlign: 'center' }}>MẸO THI</Text>
-                <Text style={{ textAlign: 'center' }}>KẾT QUẢ CAO</Text>
-              </TouchableOpacity>
-            </View>
-            <View style={{ flex: 1, backgroundColor: 'white' }}>
-              <TouchableOpacity style={{ height: 134, justifyContent: 'center', alignItems: 'center', borderWidth: 0.2 }}>
-                <Image source={require('./resources/home/tracuuluat.jpg')} style={{ width: 100, height: 90 }} />
-                <Text style={{ textAlign: 'center' }}>TRA CỨU LUẬT</Text>
-                <Text style={{ textAlign: 'center' }}>(NĐ 100/2019)</Text>
-              </TouchableOpacity>
-            </View>
-            <View style={{ flex: 1, backgroundColor: 'white' }}>
-              <TouchableOpacity style={{ height: 134, justifyContent: 'center', alignItems: 'center', borderWidth: 0.2 }}>
-                <Image source={require('./resources/home/haysai.jpg')} style={{ width: 100, height: 90 }} />
-                <Text style={{ textAlign: 'center' }}>CÁC CÂU HAY</Text>
-                <Text style={{ textAlign: 'center' }}>SAI</Text>
-              </TouchableOpacity>
+          <View style={{ flex: 1 , borderTopWidth:0.5}}>
+            <View style={{ flexDirection: 'row', flex: 1 }}>
+              <View style={{ flex: 1, backgroundColor: 'white' }}>
+                <TouchableOpacity style={{ justifyContent: 'center', alignItems: 'center',borderRightWidth:0.5 }} onPress={() => { this.props.navigation.navigate(TipsScreen) }}>
+                  <Image source={require('./resources/home/meothi.jpg')} style={{ width: 100, height: 90 }} />
+                  <Text style={{ textAlign: 'center' }}>MẸO THI</Text>
+                  <Text style={{ textAlign: 'center' }}>KẾT QUẢ CAO</Text>
+                </TouchableOpacity>
+              </View>
+              <View style={{ flex: 1, backgroundColor: 'white' }}>
+                <TouchableOpacity style={{ justifyContent: 'center', alignItems: 'center' , borderRightWidth:0.5}} onPress={()=>{this.props.navigation.navigate(TraCuuLuatScreen)}}>
+                  <Image source={require('./resources/home/tracuuluat.jpg')} style={{ width: 100, height: 90 }} />
+                  <Text style={{ textAlign: 'center' }}>TRA CỨU LUẬT</Text>
+                  <Text style={{ textAlign: 'center' }}>(NĐ 100/2019)</Text>
+                </TouchableOpacity>
+              </View>
+              <View style={{ flex: 1, backgroundColor: 'white' }}>
+                <TouchableOpacity style={{ justifyContent: 'center', alignItems: 'center'}}>
+                    <Image source={require('./resources/home/haysai.jpg')} style={{ width: 100, height: 90 }} />
+                    <Text style={{ textAlign: 'center' }}>CÁC CÂU HAY</Text>
+                    <Text style={{ textAlign: 'center' }}>SAI</Text>
+                </TouchableOpacity>
+              </View>
             </View>
           </View>
         </View>
-        <View style={{ flex: 2 }}>
-          <TouchableOpacity onPress={()=>this.props.navigation.navigate(BangGiaXeMayScreen)}>
+        <View style={{ flex: 2 ,borderTopWidth:0.5}}>
+          <TouchableOpacity onPress={() => this.props.navigation.navigate(BangGiaXeMayScreen)}>
             <Image
-              source={require('./resources/banggiaxe.jpg')}
-              style={{ height: 140, width: 410, resizeMode: 'stretch' }}
+              source={require('./resources/banggiaxemay.jpg')}
+              style={{ height: 140, width: 410, resizeMode:'stretch' }}
             />
           </TouchableOpacity>
         </View>
